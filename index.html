@@ -75,6 +75,7 @@
             display: flex;
             gap: 0.5rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links li a {
@@ -95,6 +96,46 @@
         .nav-links li a.active {
             color: #ffffff;
             background: #8b5cf6;
+        }
+
+        /* Language switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: 0.5rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.4rem 0.6rem;
+            border-radius: 10px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #a1a1aa;
+        }
+
+        .lang-btn img {
+            width: 22px;
+            height: 22px;
+            border-radius: 3px;
+            object-fit: cover;
+        }
+
+        .lang-btn.active {
+            background: rgba(139, 92, 246, 0.2);
+            color: #ffffff;
+        }
+
+        .lang-btn:hover {
+            background: rgba(139, 92, 246, 0.15);
+            color: #ffffff;
         }
 
         /* Hamburger menu (pouze na mobilu) */
@@ -160,7 +201,6 @@
             visibility: visible;
         }
 
-        /* Close button (křížek) v mobilním menu */
         .mobile-close-btn {
             position: absolute;
             top: 1.5rem;
@@ -213,6 +253,42 @@
             color: #ffffff;
             background: linear-gradient(135deg, #8b5cf6, #a78bfa);
             border-radius: 50px;
+        }
+
+        /* Mobile language switcher */
+        .mobile-lang-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-lang-btn {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 40px;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #e5e7eb;
+            transition: all 0.2s;
+        }
+
+        .mobile-lang-btn img {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .mobile-lang-btn.active {
+            background: rgba(139, 92, 246, 0.4);
+            border-color: #8b5cf6;
         }
 
         /* ========= HERO ========= */
@@ -410,12 +486,10 @@
                 padding: 0.75rem 1rem;
             }
             
-            /* Skryj desktop menu */
             .nav-links {
                 display: none;
             }
             
-            /* Zobraz hamburger */
             .menu-toggle {
                 display: flex;
             }
@@ -471,12 +545,24 @@
                     <span>Shadow<span style="color:#8b5cf6;">PvP</span></span>
                 </div>
                 
-                <!-- Desktop menu -->
-                <ul class="nav-links">
-                    <li><a href="#" class="active" data-page="home">Úvod</a></li>
-                    <li><a href="tym.html" data-page="team">Tým</a></li>
-                    <li><a href="novinky.html" data-page="news">Novinky</a></li>
-                </ul>
+                <!-- Desktop menu + language switcher -->
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <ul class="nav-links">
+                        <li><a href="#" class="active" data-page="home" data-key="nav-home">Úvod</a></li>
+                        <li><a href="tym.html" data-page="team" data-key="nav-team">Tým</a></li>
+                        <li><a href="novinky.html" data-page="news" data-key="nav-news">Novinky</a></li>
+                    </ul>
+                    <div class="lang-switcher">
+                        <button class="lang-btn" id="lang-cs" data-lang="cs">
+                            <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" width="22" height="22">
+                            <span>CZ</span>
+                        </button>
+                        <button class="lang-btn" id="lang-en" data-lang="en">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="English" width="22" height="22">
+                            <span>EN</span>
+                        </button>
+                    </div>
+                </div>
 
                 <!-- Hamburger tlačítko (mobil) -->
                 <button class="menu-toggle" id="menuToggle" aria-label="Menu">
@@ -487,17 +573,26 @@
             </div>
         </nav>
 
-        <!-- Mobilní menu overlay s křížkem -->
+        <!-- Mobilní menu overlay s křížkem a jazykovým switcher -->
         <div class="mobile-menu" id="mobileMenu">
-            <!-- Křížek pro zavření -->
             <div class="mobile-close-btn" id="mobileCloseBtn">
                 <i class="fas fa-times"></i>
             </div>
             <ul class="mobile-nav-links">
-                <li><a href="#" data-page="home" class="mobile-nav-link active">Úvod</a></li>
-                <li><a href="tym.html" data-page="team" class="mobile-nav-link">Tým</a></li>
-                <li><a href="novinky.html" data-page="news" class="mobile-nav-link">Novinky</a></li>
+                <li><a href="#" data-page="home" class="mobile-nav-link active" data-key="nav-home">Úvod</a></li>
+                <li><a href="tym.html" data-page="team" class="mobile-nav-link" data-key="nav-team">Tým</a></li>
+                <li><a href="novinky.html" data-page="news" class="mobile-nav-link" data-key="nav-news">Novinky</a></li>
             </ul>
+            <div class="mobile-lang-switcher">
+                <button class="mobile-lang-btn" id="mobile-lang-cs" data-lang="cs">
+                    <img src="https://flagcdn.com/w40/cz.png" alt="Čeština">
+                    <span>Čeština</span>
+                </button>
+                <button class="mobile-lang-btn" id="mobile-lang-en" data-lang="en">
+                    <img src="https://flagcdn.com/w40/gb.png" alt="English">
+                    <span>English</span>
+                </button>
+            </div>
         </div>
 
         <!-- Hlavní obsah - Úvod -->
@@ -505,11 +600,11 @@
             <div class="logo-wrapper">
                 <img class="server-logo" src="https://res.cloudinary.com/dvhvgspqm/image/upload/v1774107537/ChatGPT_Image_21._3._2026_16_38_44_sinanm.png" alt="ShadowPvP Server Logo" onerror="this.onerror=null;this.src='https://placehold.co/600x300/1f1f23/8b5cf6?text=ShadowPvP';">
             </div>
-            <h1 class="server-title">ShadowPvP SMP</h1>
-            <p class="server-tagline">PVP server s důrazem na fair play a soutěživost</p>
+            <h1 class="server-title" data-key="title">ShadowPvP SMP</h1>
+            <p class="server-tagline" data-key="tagline">PVP server s důrazem na fair play a soutěživost</p>
             <div class="server-badge">
                 <i class="fas fa-fire"></i>
-                <span>PVP · SMP · Season 3</span>
+                <span data-key="badge">PVP · SMP · Season 3</span>
                 <i class="fas fa-trophy"></i>
             </div>
         </div>
@@ -518,25 +613,25 @@
         <div class="stats">
             <div class="stat">
                 <div class="stat-number">128+</div>
-                <div class="stat-label">Hráčů online</div>
+                <div class="stat-label" data-key="stat-players">Hráčů online</div>
             </div>
             <div class="stat">
                 <div class="stat-number">0.8ms</div>
-                <div class="stat-label">Optimal ping</div>
+                <div class="stat-label" data-key="stat-ping">Optimal ping</div>
             </div>
             <div class="stat">
                 <div class="stat-number">24/7</div>
-                <div class="stat-label">Nonstop provoz</div>
+                <div class="stat-label" data-key="stat-uptime">Nonstop provoz</div>
             </div>
         </div>
 
         <!-- Tlačítka -->
         <div class="button-group">
             <button id="copyIpBtn" class="btn btn-primary">
-                <i class="fas fa-copy"></i> Zkopírovat IP
+                <i class="fas fa-copy"></i> <span data-key="btn-copy">Zkopírovat IP</span>
             </button>
             <button id="discordBtn" class="btn btn-secondary">
-                <i class="fab fa-discord"></i> Discord server
+                <i class="fab fa-discord"></i> <span data-key="btn-discord">Discord server</span>
             </button>
         </div>
         <div id="copyMessage" class="copy-feedback"></div>
@@ -544,45 +639,116 @@
         <!-- Feature grid -->
         <div class="features">
             <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-sword"></i>
-                </div>
-                <h3 class="feature-title">PVP ARENA 1v1</h3>
-                <p class="feature-desc">Ranked systém, žebříčky, unikátní odměny</p>
+                <div class="feature-icon"><i class="fas fa-sword"></i></div>
+                <h3 class="feature-title" data-key="feature1-title">PVP ARENA 1v1</h3>
+                <p class="feature-desc" data-key="feature1-desc">Ranked systém, žebříčky, unikátní odměny</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-crown"></i>
-                </div>
-                <h3 class="feature-title">SMP FACTION</h3>
-                <p class="feature-desc">Vlastní klany, nájezdy a území</p>
+                <div class="feature-icon"><i class="fas fa-crown"></i></div>
+                <h3 class="feature-title" data-key="feature2-title">SMP FACTION</h3>
+                <p class="feature-desc" data-key="feature2-desc">Vlastní klany, nájezdy a území</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-gem"></i>
-                </div>
-                <h3 class="feature-title">CUSTOM ITEMY</h3>
-                <p class="feature-desc">150+ unikátních enchantů a zbraní</p>
+                <div class="feature-icon"><i class="fas fa-gem"></i></div>
+                <h3 class="feature-title" data-key="feature3-title">CUSTOM ITEMY</h3>
+                <p class="feature-desc" data-key="feature3-desc">150+ unikátních enchantů a zbraní</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 class="feature-title">SEZÓNNÍ RANKY</h3>
-                <p class="feature-desc">Každou sezónu nové výzvy a tituly</p>
+                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                <h3 class="feature-title" data-key="feature4-title">SEZÓNNÍ RANKY</h3>
+                <p class="feature-desc" data-key="feature4-desc">Každou sezónu nové výzvy a tituly</p>
             </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <i class="far fa-copyright"></i> 2026 ShadowPvP Network. Všechna práva vyhrazena.
+            <i class="far fa-copyright"></i> 2026 ShadowPvP Network. <span data-key="footer-rights">Všechna práva vyhrazena.</span>
             <br>
             <span style="color:#52525b;">play.shadowpvp.eu</span>
         </div>
     </div>
 
     <script>
-        // ========== MOBILNÍ MENU S KŘÍŽKEM ==========
+        // ========== JAZYKOVÉ PŘEKLADY ==========
+        const translations = {
+            cs: {
+                'nav-home': 'Úvod',
+                'nav-team': 'Tým',
+                'nav-news': 'Novinky',
+                'title': 'ShadowPvP SMP',
+                'tagline': 'PVP server s důrazem na fair play a soutěživost',
+                'badge': 'PVP · SMP · Season 3',
+                'stat-players': 'Hráčů online',
+                'stat-ping': 'Optimal ping',
+                'stat-uptime': 'Nonstop provoz',
+                'btn-copy': 'Zkopírovat IP',
+                'btn-discord': 'Discord server',
+                'feature1-title': 'PVP ARENA 1v1',
+                'feature1-desc': 'Ranked systém, žebříčky, unikátní odměny',
+                'feature2-title': 'SMP FACTION',
+                'feature2-desc': 'Vlastní klany, nájezdy a území',
+                'feature3-title': 'CUSTOM ITEMY',
+                'feature3-desc': '150+ unikátních enchantů a zbraní',
+                'feature4-title': 'SEZÓNNÍ RANKY',
+                'feature4-desc': 'Každou sezónu nové výzvy a tituly',
+                'footer-rights': 'Všechna práva vyhrazena.',
+                'copy-success': 'IP adresa "{ip}" byla zkopírována!',
+                'copy-error': 'Zkopíruj ručně: {ip}'
+            },
+            en: {
+                'nav-home': 'Home',
+                'nav-team': 'Team',
+                'nav-news': 'News',
+                'title': 'ShadowPvP SMP',
+                'tagline': 'PVP server focused on fair play and competitiveness',
+                'badge': 'PVP · SMP · Season 3',
+                'stat-players': 'Players online',
+                'stat-ping': 'Optimal ping',
+                'stat-uptime': '24/7 Uptime',
+                'btn-copy': 'Copy IP',
+                'btn-discord': 'Discord server',
+                'feature1-title': 'PVP ARENA 1v1',
+                'feature1-desc': 'Ranked system, leaderboards, unique rewards',
+                'feature2-title': 'SMP FACTION',
+                'feature2-desc': 'Own clans, raids and territories',
+                'feature3-title': 'CUSTOM ITEMS',
+                'feature3-desc': '150+ unique enchants and weapons',
+                'feature4-title': 'SEASONAL RANKS',
+                'feature4-desc': 'New challenges and titles every season',
+                'footer-rights': 'All rights reserved.',
+                'copy-success': 'IP address "{ip}" has been copied!',
+                'copy-error': 'Copy manually: {ip}'
+            }
+        };
+
+        let currentLang = 'cs';
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            // Update all elements with data-key
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (t[key]) {
+                    el.innerHTML = t[key];
+                }
+            });
+            
+            // Update active state on language buttons
+            document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('shadowpvp_lang', lang);
+        }
+
+        // ========== MOBILNÍ MENU ==========
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileCloseBtn = document.getElementById('mobileCloseBtn');
@@ -600,37 +766,11 @@
             body.style.overflow = '';
         }
 
-        function toggleMobileMenu() {
-            if (mobileMenu.classList.contains('active')) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-        }
+        if (menuToggle) menuToggle.addEventListener('click', openMobileMenu);
+        if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileMenu);
 
-        // Hamburger tlačítko
-        if (menuToggle) {
-            menuToggle.addEventListener('click', toggleMobileMenu);
-        }
-
-        // Křížek pro zavření
-        if (mobileCloseBtn) {
-            mobileCloseBtn.addEventListener('click', closeMobileMenu);
-        }
-
-        // Zavření menu při kliknutí na odkaz v menu
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                closeMobileMenu();
-            });
-        });
-
-        // Zavření menu při kliknutí na pozadí (overlay)
         mobileMenu.addEventListener('click', (e) => {
-            if (e.target === mobileMenu) {
-                closeMobileMenu();
-            }
+            if (e.target === mobileMenu) closeMobileMenu();
         });
 
         // ========== KOPÍROVÁNÍ IP ==========
@@ -639,24 +779,21 @@
         const copyMsg = document.getElementById('copyMessage');
 
         async function copyServerIP() {
+            const t = translations[currentLang];
             try {
                 await navigator.clipboard.writeText(SERVER_IP);
-                copyMsg.innerHTML = `<i class="fas fa-check-circle"></i> IP adresa "${SERVER_IP}" byla zkopírována!`;
+                copyMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${t['copy-success'].replace('{ip}', SERVER_IP)}`;
                 copyMsg.style.color = "#8b5cf6";
-                setTimeout(() => {
-                    copyMsg.innerHTML = '';
-                }, 2500);
+                setTimeout(() => copyMsg.innerHTML = '', 2500);
             } catch (err) {
-                copyMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Zkopíruj ručně: ${SERVER_IP}`;
+                copyMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${t['copy-error'].replace('{ip}', SERVER_IP)}`;
                 setTimeout(() => {
-                    if(copyMsg.innerHTML.includes('Zkopíruj')) copyMsg.innerHTML = '';
+                    if(copyMsg.innerHTML.includes('Zkopíruj') || copyMsg.innerHTML.includes('manually')) copyMsg.innerHTML = '';
                 }, 3000);
             }
         }
 
-        if (copyBtn) {
-            copyBtn.addEventListener('click', copyServerIP);
-        }
+        if (copyBtn) copyBtn.addEventListener('click', copyServerIP);
 
         // ========== DISCORD ==========
         const DISCORD_LINK = "https://discord.gg/shadowpvp";
@@ -667,16 +804,14 @@
             });
         }
 
-        // ========== NAVIGACE (desktop i mobil) ==========
+        // ========== NAVIGACE ==========
         function handleNavigation(page, linkElement) {
             if (page === 'home') {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                // Aktualizace aktivního stavu
                 document.querySelectorAll('.nav-links li a, .mobile-nav-link').forEach(link => {
                     link.classList.remove('active');
                 });
                 linkElement.classList.add('active');
-                // Také aktualizuj desktop verzi
                 document.querySelectorAll('.nav-links li a[data-page="home"]').forEach(link => {
                     link.classList.add('active');
                 });
@@ -687,9 +822,7 @@
             }
         }
 
-        // Desktop navigace
-        const desktopNavLinks = document.querySelectorAll('.nav-links li a');
-        desktopNavLinks.forEach(link => {
+        document.querySelectorAll('.nav-links li a').forEach(link => {
             const page = link.getAttribute('data-page');
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -697,9 +830,7 @@
             });
         });
 
-        // Mobilní navigace
-        const mobileNavItems = document.querySelectorAll('.mobile-nav-link');
-        mobileNavItems.forEach(link => {
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
             const page = link.getAttribute('data-page');
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -708,7 +839,29 @@
             });
         });
 
-        // Nastavení aktivního stavu podle aktuální stránky
+        // ========== JAZYKOVÝ PŘEPÍNAČ ==========
+        // Desktop
+        document.getElementById('lang-cs').addEventListener('click', () => updateLanguage('cs'));
+        document.getElementById('lang-en').addEventListener('click', () => updateLanguage('en'));
+        // Mobile
+        document.getElementById('mobile-lang-cs').addEventListener('click', () => {
+            updateLanguage('cs');
+            closeMobileMenu();
+        });
+        document.getElementById('mobile-lang-en').addEventListener('click', () => {
+            updateLanguage('en');
+            closeMobileMenu();
+        });
+
+        // Load saved language
+        const savedLang = localStorage.getItem('shadowpvp_lang');
+        if (savedLang && (savedLang === 'cs' || savedLang === 'en')) {
+            updateLanguage(savedLang);
+        } else {
+            updateLanguage('cs');
+        }
+
+        // Set active page
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         if (currentPage === 'index.html' || currentPage === '' || currentPage === 'uvod.html') {
             document.querySelectorAll('.nav-links li a[data-page="home"], .mobile-nav-link[data-page="home"]').forEach(link => {
@@ -716,11 +869,8 @@
             });
         }
 
-        // Zavření menu při resize (pokud se změní na desktop)
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
-                closeMobileMenu();
-            }
+            if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) closeMobileMenu();
         });
     </script>
 </body>
