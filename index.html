@@ -28,7 +28,7 @@
             padding: 2rem 2rem 1.5rem;
         }
 
-        /* ========= MODERNÍ NAVBAR ========= */
+        /* ========= MODERNÍ NAVBAR S MOBILNÍM MENU ========= */
         .navbar {
             background: rgba(15, 15, 18, 0.95);
             backdrop-filter: blur(8px);
@@ -37,6 +37,7 @@
             margin-bottom: 4rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .nav-content {
@@ -54,6 +55,7 @@
             font-weight: 700;
             font-size: 1.25rem;
             letter-spacing: -0.3px;
+            z-index: 100;
         }
 
         .nav-brand i {
@@ -68,6 +70,7 @@
             color: transparent;
         }
 
+        /* Desktop menu */
         .nav-links {
             display: flex;
             gap: 0.5rem;
@@ -94,13 +97,102 @@
             background: #8b5cf6;
         }
 
+        /* Hamburger menu (pouze na mobilu) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            z-index: 100;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            border-radius: 12px;
+            background: rgba(139, 92, 246, 0.1);
+            transition: all 0.2s;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: #e5e7eb;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobilní menu overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 12, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .mobile-nav-links li {
+            margin: 1.5rem 0;
+        }
+
+        .mobile-nav-links li a {
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a1a1aa;
+            transition: all 0.2s;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+        }
+
+        .mobile-nav-links li a:hover,
+        .mobile-nav-links li a.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            border-radius: 40px;
+        }
+
         /* ========= HERO ========= */
         .hero {
             text-align: center;
             margin-bottom: 4rem;
         }
 
-        /* Logo - čisté, bez zbytečných efektů */
         .logo-wrapper {
             margin-bottom: 2rem;
         }
@@ -287,11 +379,17 @@
             
             .navbar {
                 margin-bottom: 2rem;
+                padding: 0.75rem 1rem;
             }
             
-            .nav-content {
-                flex-direction: column;
-                text-align: center;
+            /* Skryj desktop menu */
+            .nav-links {
+                display: none;
+            }
+            
+            /* Zobraz hamburger */
+            .menu-toggle {
+                display: flex;
             }
             
             .server-title {
@@ -333,31 +431,49 @@
 </head>
 <body>
     <div class="container">
-        <!-- Moderní navbar -->
+        <!-- Moderní navbar s mobilním menu -->
         <nav class="navbar">
             <div class="nav-content">
                 <div class="nav-brand">
                     <i class="fas fa-dragon"></i>
-                    <span>KillSpire<span style="color:#8b5cf6;">SMP</span></span>
+                    <span>Shadow<span style="color:#8b5cf6;">PvP</span></span>
                 </div>
+                
+                <!-- Desktop menu -->
                 <ul class="nav-links">
                     <li><a href="#" class="active" data-page="home">Úvod</a></li>
                     <li><a href="tym.html" data-page="team">Tým</a></li>
                     <li><a href="novinky.html" data-page="news">Novinky</a></li>
                 </ul>
+
+                <!-- Hamburger tlačítko (mobil) -->
+                <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </nav>
+
+        <!-- Mobilní menu overlay -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-nav-links">
+                <li><a href="#" data-page="home" class="mobile-nav-link active">Úvod</a></li>
+                <li><a href="tym.html" data-page="team" class="mobile-nav-link">Tým</a></li>
+                <li><a href="novinky.html" data-page="news" class="mobile-nav-link">Novinky</a></li>
+            </ul>
+        </div>
 
         <!-- Hlavní obsah - Úvod -->
         <div class="hero">
             <div class="logo-wrapper">
                 <img class="server-logo" src="https://res.cloudinary.com/dvhvgspqm/image/upload/v1774107537/ChatGPT_Image_21._3._2026_16_38_44_sinanm.png" alt="ShadowPvP Server Logo" onerror="this.onerror=null;this.src='https://placehold.co/600x300/1f1f23/8b5cf6?text=ShadowPvP';">
             </div>
-            <h1 class="server-title">KillSpire SMP</h1>
+            <h1 class="server-title">ShadowPvP SMP</h1>
             <p class="server-tagline">PVP server s důrazem na fair play a soutěživost</p>
             <div class="server-badge">
                 <i class="fas fa-fire"></i>
-                <span>PVP · SMP · Season 1</span>
+                <span>PVP · SMP · Season 3</span>
                 <i class="fas fa-trophy"></i>
             </div>
         </div>
@@ -365,11 +481,11 @@
         <!-- Statistiky -->
         <div class="stats">
             <div class="stat">
-                <div class="stat-number">0</div>
+                <div class="stat-number">128+</div>
                 <div class="stat-label">Hráčů online</div>
             </div>
             <div class="stat">
-                <div class="stat-number">0</div>
+                <div class="stat-number">0.8ms</div>
                 <div class="stat-label">Optimal ping</div>
             </div>
             <div class="stat">
@@ -389,16 +505,91 @@
         </div>
         <div id="copyMessage" class="copy-feedback"></div>
 
+        <!-- Feature grid -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sword"></i>
+                </div>
+                <h3 class="feature-title">PVP ARENA 1v1</h3>
+                <p class="feature-desc">Ranked systém, žebříčky, unikátní odměny</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h3 class="feature-title">SMP FACTION</h3>
+                <p class="feature-desc">Vlastní klany, nájezdy a území</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3 class="feature-title">CUSTOM ITEMY</h3>
+                <p class="feature-desc">150+ unikátních enchantů a zbraní</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">SEZÓNNÍ RANKY</h3>
+                <p class="feature-desc">Každou sezónu nové výzvy a tituly</p>
+            </div>
+        </div>
 
         <!-- Footer -->
         <div class="footer">
-            <i class="far fa-copyright"></i> 2026 KillSpire SMP Network. Všechna práva vyhrazena.
+            <i class="far fa-copyright"></i> 2026 ShadowPvP Network. Všechna práva vyhrazena.
             <br>
             <span style="color:#52525b;">play.shadowpvp.eu</span>
         </div>
     </div>
 
     <script>
+        // ========== MOBILNÍ MENU ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const body = document.body;
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            menuToggle.classList.add('active');
+            body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            body.style.overflow = '';
+        }
+
+        function toggleMobileMenu() {
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Zavření menu při kliknutí na odkaz
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+
+        // Zavření menu při kliknutí na pozadí (overlay)
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
+            }
+        });
+
         // ========== KOPÍROVÁNÍ IP ==========
         const SERVER_IP = "play.shadowpvp.eu";
         const copyBtn = document.getElementById('copyIpBtn');
@@ -433,25 +624,59 @@
             });
         }
 
-        // ========== NAVIGACE ==========
-        const navLinks = document.querySelectorAll('.nav-links li a');
-        navLinks.forEach(link => {
-            const page = link.getAttribute('data-page');
+        // ========== NAVIGACE (desktop i mobil) ==========
+        function handleNavigation(page, linkElement) {
             if (page === 'home') {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Aktualizace aktivního stavu
+                document.querySelectorAll('.nav-links li a, .mobile-nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                linkElement.classList.add('active');
+                // Také aktualizuj desktop verzi
+                document.querySelectorAll('.nav-links li a[data-page="home"]').forEach(link => {
+                    link.classList.add('active');
                 });
             } else if (page === 'team') {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.location.href = 'tym.html';
-                });
+                window.location.href = 'tym.html';
             } else if (page === 'news') {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.location.href = 'novinky.html';
-                });
+                window.location.href = 'novinky.html';
+            }
+        }
+
+        // Desktop navigace
+        const desktopNavLinks = document.querySelectorAll('.nav-links li a');
+        desktopNavLinks.forEach(link => {
+            const page = link.getAttribute('data-page');
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleNavigation(page, link);
+            });
+        });
+
+        // Mobilní navigace
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-link');
+        mobileNavItems.forEach(link => {
+            const page = link.getAttribute('data-page');
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleNavigation(page, link);
+                closeMobileMenu();
+            });
+        });
+
+        // Nastavení aktivního stavu podle aktuální stránky
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        if (currentPage === 'index.html' || currentPage === '' || currentPage === 'uvod.html') {
+            document.querySelectorAll('.nav-links li a[data-page="home"], .mobile-nav-link[data-page="home"]').forEach(link => {
+                link.classList.add('active');
+            });
+        }
+
+        // Zavření menu při resize (pokud se změní na desktop)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
             }
         });
     </script>
