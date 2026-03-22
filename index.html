@@ -144,9 +144,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 12, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 90;
+            background: rgba(8, 8, 10, 0.98);
+            backdrop-filter: blur(24px);
+            z-index: 200;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -160,6 +160,34 @@
             visibility: visible;
         }
 
+        /* Close button (křížek) v mobilním menu */
+        .mobile-close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 48px;
+            height: 48px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 210;
+        }
+
+        .mobile-close-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .mobile-close-btn i {
+            font-size: 1.5rem;
+            color: #e5e7eb;
+        }
+
         .mobile-nav-links {
             list-style: none;
             text-align: center;
@@ -167,24 +195,24 @@
         }
 
         .mobile-nav-links li {
-            margin: 1.5rem 0;
+            margin: 1.8rem 0;
         }
 
         .mobile-nav-links li a {
             text-decoration: none;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: #a1a1aa;
             transition: all 0.2s;
             display: inline-block;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.5rem;
         }
 
         .mobile-nav-links li a:hover,
         .mobile-nav-links li a.active {
             color: #ffffff;
             background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-            border-radius: 40px;
+            border-radius: 50px;
         }
 
         /* ========= HERO ========= */
@@ -426,6 +454,10 @@
             .btn {
                 justify-content: center;
             }
+            
+            .mobile-nav-links li a {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
@@ -455,8 +487,12 @@
             </div>
         </nav>
 
-        <!-- Mobilní menu overlay -->
+        <!-- Mobilní menu overlay s křížkem -->
         <div class="mobile-menu" id="mobileMenu">
+            <!-- Křížek pro zavření -->
+            <div class="mobile-close-btn" id="mobileCloseBtn">
+                <i class="fas fa-times"></i>
+            </div>
             <ul class="mobile-nav-links">
                 <li><a href="#" data-page="home" class="mobile-nav-link active">Úvod</a></li>
                 <li><a href="tym.html" data-page="team" class="mobile-nav-link">Tým</a></li>
@@ -546,9 +582,10 @@
     </div>
 
     <script>
-        // ========== MOBILNÍ MENU ==========
+        // ========== MOBILNÍ MENU S KŘÍŽKEM ==========
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
+        const mobileCloseBtn = document.getElementById('mobileCloseBtn');
         const body = document.body;
 
         function openMobileMenu() {
@@ -571,11 +608,17 @@
             }
         }
 
+        // Hamburger tlačítko
         if (menuToggle) {
             menuToggle.addEventListener('click', toggleMobileMenu);
         }
 
-        // Zavření menu při kliknutí na odkaz
+        // Křížek pro zavření
+        if (mobileCloseBtn) {
+            mobileCloseBtn.addEventListener('click', closeMobileMenu);
+        }
+
+        // Zavření menu při kliknutí na odkaz v menu
         const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
