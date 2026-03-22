@@ -28,7 +28,7 @@
             padding: 2rem 2rem 1.5rem;
         }
 
-        /* ========= MODERNÍ NAVBAR S MOBILNÍM MENU ========= */
+        /* ========= MODERNÍ NAVBAR ========= */
         .navbar {
             background: rgba(15, 15, 18, 0.95);
             backdrop-filter: blur(8px);
@@ -98,47 +98,99 @@
             background: #8b5cf6;
         }
 
-        /* Language switcher */
-        .lang-switcher {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            margin-left: 0.5rem;
+        /* ========= DROPDOWN MENU - GLOBUS ========= */
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
         }
 
-        .lang-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.4rem 0.6rem;
-            border-radius: 10px;
-            transition: all 0.2s;
+        .lang-selector {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
             font-weight: 500;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .lang-selector:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+        }
+
+        .lang-selector i {
+            font-size: 1.1rem;
+            color: #8b5cf6;
+        }
+
+        .lang-selector .fa-chevron-down {
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .lang-selector.active .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #1a1a1f;
+            border-radius: 16px;
+            padding: 0.5rem;
+            min-width: 140px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s;
+            z-index: 150;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
             color: #a1a1aa;
         }
 
-        .lang-btn img {
+        .dropdown-item:hover {
+            background: rgba(139, 92, 246, 0.15);
+            color: #ffffff;
+        }
+
+        .dropdown-item.active {
+            background: rgba(139, 92, 246, 0.25);
+            color: #ffffff;
+        }
+
+        .dropdown-item img {
             width: 22px;
             height: 22px;
             border-radius: 3px;
             object-fit: cover;
         }
 
-        .lang-btn.active {
-            background: rgba(139, 92, 246, 0.2);
-            color: #ffffff;
-        }
-
-        .lang-btn:hover {
-            background: rgba(139, 92, 246, 0.15);
-            color: #ffffff;
-        }
-
-        /* Hamburger menu (pouze na mobilu) */
+        /* Hamburger menu */
         .menu-toggle {
             display: none;
             background: none;
@@ -255,17 +307,29 @@
             border-radius: 50px;
         }
 
-        /* Mobile language switcher */
-        .mobile-lang-switcher {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
+        /* Mobile language section */
+        .mobile-lang-section {
             margin-top: 2rem;
             padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
         }
 
-        .mobile-lang-btn {
+        .mobile-lang-title {
+            font-size: 0.85rem;
+            color: #71717a;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mobile-lang-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .mobile-lang-option {
             background: rgba(139, 92, 246, 0.15);
             border: 1px solid rgba(139, 92, 246, 0.3);
             border-radius: 40px;
@@ -280,13 +344,13 @@
             transition: all 0.2s;
         }
 
-        .mobile-lang-btn img {
+        .mobile-lang-option img {
             width: 24px;
             height: 24px;
             border-radius: 4px;
         }
 
-        .mobile-lang-btn.active {
+        .mobile-lang-option.active {
             background: rgba(139, 92, 246, 0.4);
             border-color: #8b5cf6;
         }
@@ -490,6 +554,10 @@
                 display: none;
             }
             
+            .language-dropdown {
+                display: none;
+            }
+            
             .menu-toggle {
                 display: flex;
             }
@@ -537,7 +605,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Moderní navbar s mobilním menu -->
+        <!-- Navbar s dropdown menu pro jazyk -->
         <nav class="navbar">
             <div class="nav-content">
                 <div class="nav-brand">
@@ -545,26 +613,35 @@
                     <span>Shadow<span style="color:#8b5cf6;">PvP</span></span>
                 </div>
                 
-                <!-- Desktop menu + language switcher -->
+                <!-- Desktop menu -->
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <ul class="nav-links">
                         <li><a href="#" class="active" data-page="home" data-key="nav-home">Úvod</a></li>
                         <li><a href="tym.html" data-page="team" data-key="nav-team">Tým</a></li>
                         <li><a href="novinky.html" data-page="news" data-key="nav-news">Novinky</a></li>
                     </ul>
-                    <div class="lang-switcher">
-                        <button class="lang-btn" id="lang-cs" data-lang="cs">
-                            <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" width="22" height="22">
-                            <span>CZ</span>
-                        </button>
-                        <button class="lang-btn" id="lang-en" data-lang="en">
-                            <img src="https://flagcdn.com/w40/gb.png" alt="English" width="22" height="22">
-                            <span>EN</span>
-                        </button>
+                    
+                    <!-- Dropdown jazyků s globusem -->
+                    <div class="language-dropdown">
+                        <div class="lang-selector" id="langSelector">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLangLabel">Čeština</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <div class="dropdown-item" data-lang="cs">
+                                <img src="https://flagcdn.com/w40/cz.png" alt="Čeština">
+                                <span>Čeština</span>
+                            </div>
+                            <div class="dropdown-item" data-lang="en">
+                                <img src="https://flagcdn.com/w40/gb.png" alt="English">
+                                <span>English</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Hamburger tlačítko (mobil) -->
+                <!-- Hamburger tlačítko -->
                 <button class="menu-toggle" id="menuToggle" aria-label="Menu">
                     <span></span>
                     <span></span>
@@ -573,7 +650,7 @@
             </div>
         </nav>
 
-        <!-- Mobilní menu overlay s křížkem a jazykovým switcher -->
+        <!-- Mobilní menu overlay -->
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-close-btn" id="mobileCloseBtn">
                 <i class="fas fa-times"></i>
@@ -583,19 +660,24 @@
                 <li><a href="tym.html" data-page="team" class="mobile-nav-link" data-key="nav-team">Tým</a></li>
                 <li><a href="novinky.html" data-page="news" class="mobile-nav-link" data-key="nav-news">Novinky</a></li>
             </ul>
-            <div class="mobile-lang-switcher">
-                <button class="mobile-lang-btn" id="mobile-lang-cs" data-lang="cs">
-                    <img src="https://flagcdn.com/w40/cz.png" alt="Čeština">
-                    <span>Čeština</span>
-                </button>
-                <button class="mobile-lang-btn" id="mobile-lang-en" data-lang="en">
-                    <img src="https://flagcdn.com/w40/gb.png" alt="English">
-                    <span>English</span>
-                </button>
+            <div class="mobile-lang-section">
+                <div class="mobile-lang-title">
+                    <i class="fas fa-globe"></i> Language / Jazyk
+                </div>
+                <div class="mobile-lang-options">
+                    <div class="mobile-lang-option" data-lang="cs">
+                        <img src="https://flagcdn.com/w40/cz.png" alt="Čeština">
+                        <span>Čeština</span>
+                    </div>
+                    <div class="mobile-lang-option" data-lang="en">
+                        <img src="https://flagcdn.com/w40/gb.png" alt="English">
+                        <span>English</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Hlavní obsah - Úvod -->
+        <!-- Hlavní obsah -->
         <div class="hero">
             <div class="logo-wrapper">
                 <img class="server-logo" src="https://res.cloudinary.com/dvhvgspqm/image/upload/v1774107537/ChatGPT_Image_21._3._2026_16_38_44_sinanm.png" alt="ShadowPvP Server Logo" onerror="this.onerror=null;this.src='https://placehold.co/600x300/1f1f23/8b5cf6?text=ShadowPvP';">
@@ -609,7 +691,6 @@
             </div>
         </div>
 
-        <!-- Statistiky -->
         <div class="stats">
             <div class="stat">
                 <div class="stat-number">128+</div>
@@ -625,7 +706,6 @@
             </div>
         </div>
 
-        <!-- Tlačítka -->
         <div class="button-group">
             <button id="copyIpBtn" class="btn btn-primary">
                 <i class="fas fa-copy"></i> <span data-key="btn-copy">Zkopírovat IP</span>
@@ -636,7 +716,6 @@
         </div>
         <div id="copyMessage" class="copy-feedback"></div>
 
-        <!-- Feature grid -->
         <div class="features">
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-sword"></i></div>
@@ -660,7 +739,6 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
             <i class="far fa-copyright"></i> 2026 ShadowPvP Network. <span data-key="footer-rights">Všechna práva vyhrazena.</span>
             <br>
@@ -669,52 +747,32 @@
     </div>
 
     <script>
-        // ========== JAZYKOVÉ PŘEKLADY ==========
+        // ========== PŘEKLADY ==========
         const translations = {
             cs: {
-                'nav-home': 'Úvod',
-                'nav-team': 'Tým',
-                'nav-news': 'Novinky',
-                'title': 'ShadowPvP SMP',
-                'tagline': 'PVP server s důrazem na fair play a soutěživost',
-                'badge': 'PVP · SMP · Season 3',
-                'stat-players': 'Hráčů online',
-                'stat-ping': 'Optimal ping',
-                'stat-uptime': 'Nonstop provoz',
-                'btn-copy': 'Zkopírovat IP',
-                'btn-discord': 'Discord server',
-                'feature1-title': 'PVP ARENA 1v1',
-                'feature1-desc': 'Ranked systém, žebříčky, unikátní odměny',
-                'feature2-title': 'SMP FACTION',
-                'feature2-desc': 'Vlastní klany, nájezdy a území',
-                'feature3-title': 'CUSTOM ITEMY',
-                'feature3-desc': '150+ unikátních enchantů a zbraní',
-                'feature4-title': 'SEZÓNNÍ RANKY',
-                'feature4-desc': 'Každou sezónu nové výzvy a tituly',
+                'nav-home': 'Úvod', 'nav-team': 'Tým', 'nav-news': 'Novinky',
+                'title': 'ShadowPvP SMP', 'tagline': 'PVP server s důrazem na fair play a soutěživost',
+                'badge': 'PVP · SMP · Season 3', 'stat-players': 'Hráčů online',
+                'stat-ping': 'Optimal ping', 'stat-uptime': 'Nonstop provoz',
+                'btn-copy': 'Zkopírovat IP', 'btn-discord': 'Discord server',
+                'feature1-title': 'PVP ARENA 1v1', 'feature1-desc': 'Ranked systém, žebříčky, unikátní odměny',
+                'feature2-title': 'SMP FACTION', 'feature2-desc': 'Vlastní klany, nájezdy a území',
+                'feature3-title': 'CUSTOM ITEMY', 'feature3-desc': '150+ unikátních enchantů a zbraní',
+                'feature4-title': 'SEZÓNNÍ RANKY', 'feature4-desc': 'Každou sezónu nové výzvy a tituly',
                 'footer-rights': 'Všechna práva vyhrazena.',
                 'copy-success': 'IP adresa "{ip}" byla zkopírována!',
                 'copy-error': 'Zkopíruj ručně: {ip}'
             },
             en: {
-                'nav-home': 'Home',
-                'nav-team': 'Team',
-                'nav-news': 'News',
-                'title': 'ShadowPvP SMP',
-                'tagline': 'PVP server focused on fair play and competitiveness',
-                'badge': 'PVP · SMP · Season 3',
-                'stat-players': 'Players online',
-                'stat-ping': 'Optimal ping',
-                'stat-uptime': '24/7 Uptime',
-                'btn-copy': 'Copy IP',
-                'btn-discord': 'Discord server',
-                'feature1-title': 'PVP ARENA 1v1',
-                'feature1-desc': 'Ranked system, leaderboards, unique rewards',
-                'feature2-title': 'SMP FACTION',
-                'feature2-desc': 'Own clans, raids and territories',
-                'feature3-title': 'CUSTOM ITEMS',
-                'feature3-desc': '150+ unique enchants and weapons',
-                'feature4-title': 'SEASONAL RANKS',
-                'feature4-desc': 'New challenges and titles every season',
+                'nav-home': 'Home', 'nav-team': 'Team', 'nav-news': 'News',
+                'title': 'ShadowPvP SMP', 'tagline': 'PVP server focused on fair play and competitiveness',
+                'badge': 'PVP · SMP · Season 3', 'stat-players': 'Players online',
+                'stat-ping': 'Optimal ping', 'stat-uptime': '24/7 Uptime',
+                'btn-copy': 'Copy IP', 'btn-discord': 'Discord server',
+                'feature1-title': 'PVP ARENA 1v1', 'feature1-desc': 'Ranked system, leaderboards, unique rewards',
+                'feature2-title': 'SMP FACTION', 'feature2-desc': 'Own clans, raids and territories',
+                'feature3-title': 'CUSTOM ITEMS', 'feature3-desc': '150+ unique enchants and weapons',
+                'feature4-title': 'SEASONAL RANKS', 'feature4-desc': 'New challenges and titles every season',
                 'footer-rights': 'All rights reserved.',
                 'copy-success': 'IP address "{ip}" has been copied!',
                 'copy-error': 'Copy manually: {ip}'
@@ -727,50 +785,77 @@
             currentLang = lang;
             const t = translations[lang];
             
-            // Update all elements with data-key
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (t[key]) {
-                    el.innerHTML = t[key];
-                }
+                if (t[key]) el.innerHTML = t[key];
             });
             
-            // Update active state on language buttons
-            document.querySelectorAll('.lang-btn, .mobile-lang-btn').forEach(btn => {
-                if (btn.getAttribute('data-lang') === lang) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+            // Update active state
+            document.querySelectorAll('.dropdown-item, .mobile-lang-option').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+                else btn.classList.remove('active');
             });
             
-            // Save to localStorage
+            document.getElementById('currentLangLabel').innerText = lang === 'cs' ? 'Čeština' : 'English';
             localStorage.setItem('shadowpvp_lang', lang);
         }
+
+        // ========== DROPDOWN MENU ==========
+        const langSelector = document.getElementById('langSelector');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        langSelector.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('active');
+            langSelector.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!langSelector.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+                langSelector.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const lang = item.getAttribute('data-lang');
+                updateLanguage(lang);
+                dropdownMenu.classList.remove('active');
+                langSelector.classList.remove('active');
+            });
+        });
 
         // ========== MOBILNÍ MENU ==========
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-        const body = document.body;
 
         function openMobileMenu() {
             mobileMenu.classList.add('active');
             menuToggle.classList.add('active');
-            body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
         }
 
         function closeMobileMenu() {
             mobileMenu.classList.remove('active');
             menuToggle.classList.remove('active');
-            body.style.overflow = '';
+            document.body.style.overflow = '';
         }
 
-        if (menuToggle) menuToggle.addEventListener('click', openMobileMenu);
-        if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileMenu);
+        menuToggle.addEventListener('click', openMobileMenu);
+        mobileCloseBtn.addEventListener('click', closeMobileMenu);
+        mobileMenu.addEventListener('click', (e) => { if (e.target === mobileMenu) closeMobileMenu(); });
 
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target === mobileMenu) closeMobileMenu();
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => closeMobileMenu());
+        });
+
+        document.querySelectorAll('.mobile-lang-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                updateLanguage(opt.getAttribute('data-lang'));
+                closeMobileMenu();
+            });
         });
 
         // ========== KOPÍROVÁNÍ IP ==========
@@ -783,90 +868,52 @@
             try {
                 await navigator.clipboard.writeText(SERVER_IP);
                 copyMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${t['copy-success'].replace('{ip}', SERVER_IP)}`;
-                copyMsg.style.color = "#8b5cf6";
                 setTimeout(() => copyMsg.innerHTML = '', 2500);
-            } catch (err) {
+            } catch {
                 copyMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${t['copy-error'].replace('{ip}', SERVER_IP)}`;
-                setTimeout(() => {
-                    if(copyMsg.innerHTML.includes('Zkopíruj') || copyMsg.innerHTML.includes('manually')) copyMsg.innerHTML = '';
-                }, 3000);
+                setTimeout(() => { if (copyMsg.innerHTML.includes('Zkopíruj') || copyMsg.innerHTML.includes('manually')) copyMsg.innerHTML = ''; }, 3000);
             }
         }
-
-        if (copyBtn) copyBtn.addEventListener('click', copyServerIP);
+        copyBtn.addEventListener('click', copyServerIP);
 
         // ========== DISCORD ==========
-        const DISCORD_LINK = "https://discord.gg/shadowpvp";
-        const discordBtnElem = document.getElementById('discordBtn');
-        if (discordBtnElem) {
-            discordBtnElem.addEventListener('click', () => {
-                window.open(DISCORD_LINK, '_blank', 'noopener,noreferrer');
-            });
-        }
+        document.getElementById('discordBtn').addEventListener('click', () => {
+            window.open('https://discord.gg/shadowpvp', '_blank');
+        });
 
         // ========== NAVIGACE ==========
-        function handleNavigation(page, linkElement) {
+        function handleNavigation(page, link) {
             if (page === 'home') {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                document.querySelectorAll('.nav-links li a, .mobile-nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                linkElement.classList.add('active');
-                document.querySelectorAll('.nav-links li a[data-page="home"]').forEach(link => {
-                    link.classList.add('active');
-                });
-            } else if (page === 'team') {
-                window.location.href = 'tym.html';
-            } else if (page === 'news') {
-                window.location.href = 'novinky.html';
-            }
+                document.querySelectorAll('.nav-links li a, .mobile-nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                document.querySelectorAll('.nav-links li a[data-page="home"]').forEach(l => l.classList.add('active'));
+            } else if (page === 'team') window.location.href = 'tym.html';
+            else if (page === 'news') window.location.href = 'novinky.html';
         }
 
         document.querySelectorAll('.nav-links li a').forEach(link => {
-            const page = link.getAttribute('data-page');
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                handleNavigation(page, link);
+                handleNavigation(link.getAttribute('data-page'), link);
             });
         });
 
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            const page = link.getAttribute('data-page');
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                handleNavigation(page, link);
+                handleNavigation(link.getAttribute('data-page'), link);
                 closeMobileMenu();
             });
         });
 
-        // ========== JAZYKOVÝ PŘEPÍNAČ ==========
-        // Desktop
-        document.getElementById('lang-cs').addEventListener('click', () => updateLanguage('cs'));
-        document.getElementById('lang-en').addEventListener('click', () => updateLanguage('en'));
-        // Mobile
-        document.getElementById('mobile-lang-cs').addEventListener('click', () => {
-            updateLanguage('cs');
-            closeMobileMenu();
-        });
-        document.getElementById('mobile-lang-en').addEventListener('click', () => {
-            updateLanguage('en');
-            closeMobileMenu();
-        });
-
         // Load saved language
         const savedLang = localStorage.getItem('shadowpvp_lang');
-        if (savedLang && (savedLang === 'cs' || savedLang === 'en')) {
-            updateLanguage(savedLang);
-        } else {
-            updateLanguage('cs');
-        }
+        updateLanguage(savedLang === 'cs' || savedLang === 'en' ? savedLang : 'cs');
 
         // Set active page
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        if (currentPage === 'index.html' || currentPage === '' || currentPage === 'uvod.html') {
-            document.querySelectorAll('.nav-links li a[data-page="home"], .mobile-nav-link[data-page="home"]').forEach(link => {
-                link.classList.add('active');
-            });
+        if (window.location.pathname.split('/').pop() === '' || window.location.pathname.split('/').pop() === 'index.html') {
+            document.querySelectorAll('.nav-links li a[data-page="home"], .mobile-nav-link[data-page="home"]').forEach(l => l.classList.add('active'));
         }
 
         window.addEventListener('resize', () => {
