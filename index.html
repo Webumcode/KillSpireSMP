@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ShadowPvP | Moderní PVP SMP Server</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0c;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #e5e7eb;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1.5rem;
+        }
+
+        /* ========= MODERNÍ NAVBAR ========= */
+        .navbar {
+            background: rgba(15, 15, 18, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 0.75rem 1.5rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-brand i {
+            font-size: 1.5rem;
+            color: #8b5cf6;
+        }
+
+        .nav-brand span {
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 12px;
+            color: #a1a1aa;
+            transition: all 0.2s;
+        }
+
+        .nav-links li a:hover {
+            color: #ffffff;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .nav-links li a.active {
+            color: #ffffff;
+            background: #8b5cf6;
+        }
+
+        /* ========= HERO ========= */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        /* Logo - čisté, bez zbytečných efektů */
+        .logo-wrapper {
+            margin-bottom: 2rem;
+        }
+
+        .server-logo {
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            max-height: 280px;
+            object-fit: contain;
+        }
+
+        .server-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #ffffff, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .server-tagline {
+            font-size: 1.1rem;
+            color: #71717a;
+            margin-bottom: 1rem;
+        }
+
+        .server-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.12);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #a78bfa;
+        }
+
+        /* ========= STATS ========= */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            margin: 2.5rem 0 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========= BUTTONS ========= */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7c3aed;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e5e7eb;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .copy-feedback {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #8b5cf6;
+            margin-top: 0.5rem;
+        }
+
+        /* ========= FEATURE GRID ========= */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: #111113;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon i {
+            color: #8b5cf6;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .feature-desc {
+            font-size: 0.85rem;
+            color: #71717a;
+            line-height: 1.4;
+        }
+
+        /* ========= FOOTER ========= */
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #52525b;
+        }
+
+        /* ========= RESPONSIVE ========= */
+        @media (max-width: 1024px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem 1.5rem;
+            }
+            
+            .navbar {
+                margin-bottom: 2rem;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .server-title {
+                font-size: 2rem;
+            }
+            
+            .server-logo {
+                max-height: 200px;
+            }
+            
+            .stats {
+                gap: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Moderní navbar -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <i class="fas fa-dragon"></i>
+                    <span>KillSpire<span style="color:#8b5cf6;">SMP</span></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="active" data-page="home">Úvod</a></li>
+                    <li><a href="tym.html" data-page="team">Tým</a></li>
+                    <li><a href="novinky.html" data-page="news">Novinky</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hlavní obsah - Úvod -->
+        <div class="hero">
+            <div class="logo-wrapper">
+                <img class="server-logo" src="https://res.cloudinary.com/dvhvgspqm/image/upload/v1774107537/ChatGPT_Image_21._3._2026_16_38_44_sinanm.png" alt="ShadowPvP Server Logo" onerror="this.onerror=null;this.src='https://placehold.co/600x300/1f1f23/8b5cf6?text=ShadowPvP';">
+            </div>
+            <h1 class="server-title">KillSpire SMP</h1>
+            <p class="server-tagline">PVP server s důrazem na fair play a soutěživost</p>
+            <div class="server-badge">
+                <i class="fas fa-fire"></i>
+                <span>PVP · SMP · Season 1</span>
+                <i class="fas fa-trophy"></i>
+            </div>
+        </div>
+
+        <!-- Statistiky -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Hráčů online</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Optimal ping</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Nonstop provoz</div>
+            </div>
+        </div>
+
+        <!-- Tlačítka -->
+        <div class="button-group">
+            <button id="copyIpBtn" class="btn btn-primary">
+                <i class="fas fa-copy"></i> Zkopírovat IP
+            </button>
+            <button id="discordBtn" class="btn btn-secondary">
+                <i class="fab fa-discord"></i> Discord server
+            </button>
+        </div>
+        <div id="copyMessage" class="copy-feedback"></div>
+
+
+        <!-- Footer -->
+        <div class="footer">
+            <i class="far fa-copyright"></i> 2026 KillSpire SMP Network. Všechna práva vyhrazena.
+            <br>
+            <span style="color:#52525b;">play.shadowpvp.eu</span>
+        </div>
+    </div>
+
+    <script>
+        // ========== KOPÍROVÁNÍ IP ==========
+        const SERVER_IP = "play.shadowpvp.eu";
+        const copyBtn = document.getElementById('copyIpBtn');
+        const copyMsg = document.getElementById('copyMessage');
+
+        async function copyServerIP() {
+            try {
+                await navigator.clipboard.writeText(SERVER_IP);
+                copyMsg.innerHTML = `<i class="fas fa-check-circle"></i> IP adresa "${SERVER_IP}" byla zkopírována!`;
+                copyMsg.style.color = "#8b5cf6";
+                setTimeout(() => {
+                    copyMsg.innerHTML = '';
+                }, 2500);
+            } catch (err) {
+                copyMsg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Zkopíruj ručně: ${SERVER_IP}`;
+                setTimeout(() => {
+                    if(copyMsg.innerHTML.includes('Zkopíruj')) copyMsg.innerHTML = '';
+                }, 3000);
+            }
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', copyServerIP);
+        }
+
+        // ========== DISCORD ==========
+        const DISCORD_LINK = "https://discord.gg/shadowpvp";
+        const discordBtnElem = document.getElementById('discordBtn');
+        if (discordBtnElem) {
+            discordBtnElem.addEventListener('click', () => {
+                window.open(DISCORD_LINK, '_blank', 'noopener,noreferrer');
+            });
+        }
+
+        // ========== NAVIGACE ==========
+        const navLinks = document.querySelectorAll('.nav-links li a');
+        navLinks.forEach(link => {
+            const page = link.getAttribute('data-page');
+            if (page === 'home') {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            } else if (page === 'team') {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = 'tym.html';
+                });
+            } else if (page === 'news') {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = 'novinky.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
